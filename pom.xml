@@ -81,10 +81,10 @@
     <properties>
     	<appointment.version>2.0.0-SNAPSHOT</appointment.version>
     	<core.version>6.0.1</core.version>
-        <componentName>appointmentfactory</componentName>
-        <java.version>1.8</java.version>
-        <jiraProjectName>APPOINTMENTFACTORY</jiraProjectName>
-        <jiraComponentId></jiraComponentId>
+        <componentName>appointment factory</componentName>
+        <jiraProjectName>APPTFACTOR</jiraProjectName>
+        <jiraComponentId>13758</jiraComponentId>
+        <java.version>1.8</java.version>        
         <maven.version>3.5.1</maven.version>
     </properties>
 </project>
