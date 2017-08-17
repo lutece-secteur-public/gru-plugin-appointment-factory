@@ -149,7 +149,6 @@ public class ManageAppointmentfactoryJspBean extends MVCAdminJspBean
     @View( value = VIEW_MANAGE_APPOINTMENT_FACTORY, defaultView = true )
     public String getManageAppointmentFactory( HttpServletRequest request )
     {
-        Map<String, Object> model = getModel( );
         String strCurrentPageIndex = Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX,
                 (String) request.getSession( ).getAttribute( SESSION_CURRENT_PAGE_INDEX ) );
         if ( strCurrentPageIndex == null )
@@ -184,6 +183,7 @@ public class ManageAppointmentfactoryJspBean extends MVCAdminJspBean
         request.getSession( ).setAttribute( SESSION_ATTRIBUTE_APPOINTMENT_FACTORY, appointmentFactoryDTO );
         LocalizedPaginator<InstanceDTO> paginator = new LocalizedPaginator<InstanceDTO>( new ArrayList<>( mapInstances.values( ) ), nItemsPerPage, strUrl,
                 PARAMETER_PAGE_INDEX, strCurrentPageIndex, getLocale( ) );
+        Map<String, Object> model = getModel( );
         model.put( MARK_LIST_FORMS, FormService.findAllInReferenceList( ) );
         model.put( MARK_NB_ITEMS_PER_PAGE, Integer.toString( nItemsPerPage ) );
         model.put( MARK_PAGINATOR, paginator );
@@ -226,6 +226,7 @@ public class ManageAppointmentfactoryJspBean extends MVCAdminJspBean
         StringBuilder stbPath = new StringBuilder( ).append( RestConstants.BASE_PATH ).append( Constants.PLUGIN_PATH ).append( Constants.FORM_PATH )
                 .append( Constants.IMPORT_PATH );
         String strPath = stbPath.toString( );
+        boolean bError = Boolean.FALSE;
         for ( String strIdInstance : tabIdInstances )
         {
             int nIdInstance = Integer.parseInt( strIdInstance );
@@ -238,10 +239,14 @@ public class ManageAppointmentfactoryJspBean extends MVCAdminJspBean
                 if ( res.getStatus( ) != Status.OK.getStatusCode( ) )
                 {
                     addError( "Error for instance " + instanceDTO.getName( ) + "; Response status = " + res.getStatus( ) );
+                    bError = Boolean.TRUE;
                 }
             }
         }
-        addInfo( INFO_MESSAGE_FORM_EXPORT_OK, getLocale( ) );
+        if ( !bError )
+        {
+            addInfo( INFO_MESSAGE_FORM_EXPORT_OK, getLocale( ) );
+        }
         return redirectView( request, VIEW_MANAGE_APPOINTMENT_FACTORY );
     }
 
