@@ -1,0 +1,57 @@
+<div class="row" >
+	<form class="form-horizontal" method="post" action="jsp/admin/plugins/appointmentfactory/ManageAppointmentfactory.jsp" enctype="multipart/form-data">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div class="box box-primary">
+				<div class="box-header with-border">
+					<h3 class="box-title">#i18n{appointmentfactory.manageExportForm.title}</h3>
+					<@messages errors=errors infos=infos/>
+				</div>
+				<div class="box-body">
+					<fieldset>
+						<legend class="hidden">#i18n{appointmentfactory.manageExportForm.title}</legend>						
+						<@fieldInputCombo i18nLabelKey='appointmentfactory.manageExportForm.labelForm' inputName='idForm' mandatory=true items=listForms value="${appointmentfactory.idForm!}"/>
+                        <p class="help-block">#i18n{appointmentfactory.manageInstances.help}</p>                        
+						<div class="box box-default">
+							
+                            <div class="box-body">                            	
+								<#if listInstances?? && listInstances?size &gt; 0>
+									<table class="table table-condensed table-striped">
+										<tr>
+											<th><input type="checkbox" id="allCheck" title="#i18n{appointmentfactory.checkbox.infos}"></th>
+											<th>#i18n{appointmentfactory.manageInstances.title}</th>
+											<th>#i18n{appointmentfactory.manageInstances.url}</th>
+										</tr>
+										<#list listInstances as instance >
+											<tr>
+												<td><input type="checkbox" name="inst" id="inst" value="${instance.idInstance}"></td>
+												<td>${instance.name}</td>
+												<td>${instance.url}</td>
+											</tr>
+										</#list>
+									</table>
+								<#else>#i18n{portal.util.labelNoItem}</#if>
+									<center><@paginationAdmin paginator=paginator form=0 /></center>
+							</div>
+						</div>
+                        <div class="form-group">
+								<div class="col-xs-12 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+									<button name="action_exportForm" class="btn btn-primary btn-sm" type="submit" tabindex="19">
+										<i class="glyphicon glyphicon-ok"></i>&nbsp;#i18n{appointmentfactory.manageExportForm.titleExport}
+									</button>
+								</div>
+							</div>
+					</fieldset>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>	
+<script src="js/jquery/plugins/ui/jquery-ui-1.9.2.custom.min.js"></script>
+<script type="text/javascript">
+	$('#allCheck').click(function() {
+		var etat = this.checked;
+		$("input[name='inst']").each(function() {
+			this.checked = etat;
+		});
+	});
+</script>
