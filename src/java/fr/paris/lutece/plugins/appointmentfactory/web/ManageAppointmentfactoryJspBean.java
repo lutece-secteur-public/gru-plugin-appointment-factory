@@ -54,6 +54,7 @@ import fr.paris.lutece.plugins.appointment.service.FormTradeService;
 import fr.paris.lutece.plugins.appointment.web.rs.Constants;
 import fr.paris.lutece.plugins.appointmentfactory.business.AppointmentFactoryDTO;
 import fr.paris.lutece.plugins.appointmentfactory.business.InstanceDTO;
+import fr.paris.lutece.plugins.appointmentfactory.service.InstanceService;
 import fr.paris.lutece.plugins.rest.service.RestConstants;
 import fr.paris.lutece.portal.service.admin.AccessDeniedException;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
@@ -98,9 +99,6 @@ public class ManageAppointmentfactoryJspBean extends MVCAdminJspBean
 
     // Properties
     private static final String PROPERTY_DEFAULT_LIST_SERVERS_PER_PAGE = "appointmentfactory.listServers.itemsPerPage";
-    private static final String PROPERTY_NB_INSTANCES = "appointmentfactory.nbInstances";
-    private static final String PROPERTY_INSTANCE_NAME = "appointmentfactory.instance.name.";
-    private static final String PROPERTY_INSTANCE_URL = "appointmentfactory.instance.url.";
 
     // Views
     private static final String VIEW_MANAGE_APPOINTMENT_FACTORY = "manageAppointmentfactory";
@@ -151,7 +149,7 @@ public class ManageAppointmentfactoryJspBean extends MVCAdminJspBean
     {
         String strCurrentPageIndex = Paginator.getPageIndex( request, Paginator.PARAMETER_PAGE_INDEX,
                 (String) request.getSession( ).getAttribute( SESSION_CURRENT_PAGE_INDEX ) );
-        if ( strCurrentPageIndex == null )
+        if ( StringUtils.isEmpty( strCurrentPageIndex ) )
         {
             strCurrentPageIndex = DEFAULT_CURRENT_PAGE;
         }
@@ -167,18 +165,7 @@ public class ManageAppointmentfactoryJspBean extends MVCAdminJspBean
         UrlItem url = new UrlItem( JSP_MANAGE_APPOINTMENT_FACTORY );
         url.addParameter( MVCUtils.PARAMETER_VIEW, VIEW_MANAGE_APPOINTMENT_FACTORY );
         String strUrl = url.getUrl( );
-        HashMap<Integer, InstanceDTO> mapInstances = new HashMap<>( );
-
-        int nbInstances = AppPropertiesService.getPropertyInt( PROPERTY_NB_INSTANCES, 0 );
-
-        for ( int i = 1; i < nbInstances + 1; i++ )
-        {
-            InstanceDTO instance = new InstanceDTO( );
-            instance.setIdInstance( i );
-            instance.setName( AppPropertiesService.getProperty( PROPERTY_INSTANCE_NAME + i ) );
-            instance.setUrl( AppPropertiesService.getProperty( PROPERTY_INSTANCE_URL + i ) );
-            mapInstances.put( i, instance );
-        }
+        HashMap<Integer, InstanceDTO> mapInstances = InstanceService.getInstancesFromProperties( );
         appointmentFactoryDTO.setInstances( mapInstances );
         request.getSession( ).setAttribute( SESSION_ATTRIBUTE_APPOINTMENT_FACTORY, appointmentFactoryDTO );
         LocalizedPaginator<InstanceDTO> paginator = new LocalizedPaginator<InstanceDTO>( new ArrayList<>( mapInstances.values( ) ), nItemsPerPage, strUrl,
@@ -219,35 +206,53 @@ public class ManageAppointmentfactoryJspBean extends MVCAdminJspBean
             addError( ERROR_MESSAGE_NO_INSTANCE_CHECKED, getLocale( ) );
             return redirectView( request, VIEW_MANAGE_APPOINTMENT_FACTORY );
         }
-        JSONObject jsonToExport = FormTradeService.exportFormToJson( appointmentFactoryDTO.getIdForm( ) );
-        HashMap<Integer, InstanceDTO> mapInstances = appointmentFactoryDTO.getInstances( );
-        WebTarget target;
-        Client client = ClientBuilder.newClient( );
-        StringBuilder stbPath = new StringBuilder( ).append( RestConstants.BASE_PATH ).append( Constants.PLUGIN_PATH ).append( Constants.FORM_PATH )
-                .append( Constants.IMPORT_PATH );
-        String strPath = stbPath.toString( );
-        boolean bError = Boolean.FALSE;
-        for ( String strIdInstance : tabIdInstances )
-        {
-            int nIdInstance = Integer.parseInt( strIdInstance );
-            if ( mapInstances.containsKey( nIdInstance ) )
-            {
-                InstanceDTO instanceDTO = mapInstances.get( nIdInstance );
-                String url = instanceDTO.getUrl( );
-                target = client.target( url ).path( strPath );
-                Response res = target.request( MediaType.APPLICATION_JSON ).post( Entity.json( jsonToExport ) );
-                if ( res.getStatus( ) != Status.OK.getStatusCode( ) )
-                {
-                    addError( "Error for instance " + instanceDTO.getName( ) + "; Response status = " + res.getStatus( ) );
-                    bError = Boolean.TRUE;
-                }
-            }
-        }
-        if ( !bError )
+        if ( callRestService( tabIdInstances, appointmentFactoryDTO.getInstances( ), FormTradeService.exportFormToJson( appointmentFactoryDTO.getIdForm( ) ) ) )
         {
             addInfo( INFO_MESSAGE_FORM_EXPORT_OK, getLocale( ) );
         }
         return redirectView( request, VIEW_MANAGE_APPOINTMENT_FACTORY );
+    }
+
+    /**
+     * Call the rest service that will import the json file to the instances selected
+     * 
+     * @param tabIdInstances
+     *            the instances selected
+     * @param mapInstances
+     *            all the instances in the properties
+     * @param jsonToExport
+     *            the json to export
+     * @return true if all the calls are ok
+     */
+    private boolean callRestService( String [ ] tabIdInstances, HashMap<Integer, InstanceDTO> mapInstances, JSONObject jsonToExport )
+    {
+        boolean bCallOk = Boolean.TRUE;
+        WebTarget target;
+        int nIdInstance;
+        InstanceDTO instanceDTO;
+        String url;
+        Response res;
+        Client client = ClientBuilder.newClient( );
+        StringBuilder stbPath = new StringBuilder( ).append( RestConstants.BASE_PATH ).append( Constants.PLUGIN_PATH ).append( Constants.FORM_PATH )
+                .append( Constants.IMPORT_PATH );
+        String strPath = stbPath.toString( );
+        for ( String strIdInstance : tabIdInstances )
+        {
+            nIdInstance = Integer.parseInt( strIdInstance );
+            if ( mapInstances.containsKey( nIdInstance ) )
+            {
+                instanceDTO = mapInstances.get( nIdInstance );
+                url = instanceDTO.getUrl( );
+                target = client.target( url ).path( strPath );
+                res = target.request( MediaType.APPLICATION_JSON ).post( Entity.json( jsonToExport ) );
+                if ( res.getStatus( ) != Status.OK.getStatusCode( ) )
+                {
+                    addError( "Error for instance " + instanceDTO.getName( ) + "; Response status = " + res.getStatus( ) );
+                    bCallOk = Boolean.FALSE;
+                }
+            }
+        }
+        return bCallOk;
     }
 
     /**

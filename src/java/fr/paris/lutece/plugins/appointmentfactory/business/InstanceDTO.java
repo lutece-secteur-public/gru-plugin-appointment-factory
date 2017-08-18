@@ -32,6 +32,23 @@ public class InstanceDTO implements Serializable
     private String _strUrl;
 
     /**
+     * Constructor
+     * 
+     * @param nIdInstance
+     *            the id of the instance
+     * @param strName
+     *            the name of the instance
+     * @param strUrl
+     *            the url of the instance
+     */
+    public InstanceDTO( int nIdInstance, String strName, String strUrl )
+    {
+        this._nIdInstance = nIdInstance;
+        this._strName = strName;
+        this._strUrl = strUrl;
+    }
+
+    /**
      * Get the id of the instance
      * 
      * @return the id of the instance
