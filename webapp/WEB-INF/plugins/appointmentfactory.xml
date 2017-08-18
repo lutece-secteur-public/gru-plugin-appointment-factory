@@ -25,7 +25,7 @@
             <feature-id>APPOINTMENTFACTORY_MANAGEMENT</feature-id>
             <feature-title>appointmentfactory.adminFeature.ManageAppointmentfactory.name</feature-title>
             <feature-description>appointmentfactory.adminFeature.ManageAppointmentfactory.description</feature-description>
-            <feature-level>2</feature-level>
+            <feature-level>2</feature-level>            
             <feature-url>jsp/admin/plugins/appointmentfactory/ManageAppointmentfactory.jsp</feature-url>
             <feature-icon-url></feature-icon-url>
       </admin-feature>
