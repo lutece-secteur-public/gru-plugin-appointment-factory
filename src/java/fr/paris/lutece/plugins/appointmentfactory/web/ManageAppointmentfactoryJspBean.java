@@ -52,7 +52,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 import fr.paris.lutece.plugins.appointment.service.FormService;
-import fr.paris.lutece.plugins.appointment.service.FormTradeService;
+import fr.paris.lutece.plugins.appointment.service.FormTraderService;
 import fr.paris.lutece.plugins.appointment.web.rs.Constants;
 import fr.paris.lutece.plugins.appointmentfactory.business.AppointmentFactoryDTO;
 import fr.paris.lutece.plugins.appointmentfactory.business.InstanceDTO;
@@ -208,7 +208,7 @@ public class ManageAppointmentfactoryJspBean extends MVCAdminJspBean
             addError( ERROR_MESSAGE_NO_INSTANCE_CHECKED, getLocale( ) );
             return redirectView( request, VIEW_MANAGE_APPOINTMENT_FACTORY );
         }
-        if ( callRestService( tabIdInstances, appointmentFactoryDTO.getInstances( ), FormTradeService.exportFormToJson( appointmentFactoryDTO.getIdForm( ) ) ) )
+        if ( callRestService( tabIdInstances, appointmentFactoryDTO.getInstances( ), FormTraderService.exportFormToJson( appointmentFactoryDTO.getIdForm( ) ) ) )
         {
             addInfo( INFO_MESSAGE_FORM_EXPORT_OK, getLocale( ) );
         }
