@@ -49,6 +49,8 @@ import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+
 import fr.paris.lutece.plugins.appointment.service.FormService;
 import fr.paris.lutece.plugins.appointment.service.FormTradeService;
 import fr.paris.lutece.plugins.appointment.web.rs.Constants;
@@ -232,7 +234,8 @@ public class ManageAppointmentfactoryJspBean extends MVCAdminJspBean
         InstanceDTO instanceDTO;
         String url;
         Response res;
-        Client client = ClientBuilder.newClient( );
+
+        Client client = ClientBuilder.newClient( ).register( JacksonJsonProvider.class );
         StringBuilder stbPath = new StringBuilder( ).append( RestConstants.BASE_PATH ).append( Constants.PLUGIN_PATH ).append( Constants.FORM_PATH )
                 .append( Constants.IMPORT_PATH );
         String strPath = stbPath.toString( );
