@@ -1,8 +1,10 @@
 package fr.paris.lutece.plugins.appointmentfactory.service;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 import fr.paris.lutece.plugins.appointmentfactory.business.InstanceDTO;
+import fr.paris.lutece.plugins.workflow.service.WorkflowTraderService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 
 /**
@@ -42,6 +44,7 @@ public final class InstanceService
                     new InstanceDTO( i, AppPropertiesService.getProperty( PROPERTY_INSTANCE_NAME + i ), AppPropertiesService.getProperty( PROPERTY_INSTANCE_URL
                             + i ) ) );
         }
+        WorkflowTraderService.exportWorkflowToJson(1, Locale.FRENCH);
         return mapInstances;
     }
 
