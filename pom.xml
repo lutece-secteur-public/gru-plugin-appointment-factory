@@ -20,7 +20,7 @@
         <java.version>1.8</java.version>   
         <jersey.version>2.26</jersey.version>     
         <maven.version>3.5.1</maven.version>
-        <restEasy.version>3.1.4.Final</restEasy.version>        
+        <restEasy.version>3.0.12.Final</restEasy.version>        
     </properties>
     <repositories>
         <repository>
