@@ -44,34 +44,24 @@
             <type>lutece-plugin</type>
         </dependency>
         <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-client</artifactId>
-            <version>${restEasy.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-jaxrs</artifactId>
-            <version>${restEasy.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>jaxrs-api</artifactId>
-            <version>${jaxrs.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-jaxb-provider</artifactId>
-            <version>${restEasy.version}</version>
-        </dependency>
-        <dependency>
+    		<groupId>org.jboss.resteasy</groupId>
+    		<artifactId>resteasy-jaxrs</artifactId>
+    		<version>3.1.4.Final</version>
+		</dependency> 
+		<dependency>
+    		<groupId>org.jboss.resteasy</groupId>
+    		<artifactId>resteasy-client</artifactId>
+    		<version>3.1.4.Final</version>
+		</dependency>    
+		<dependency>
+    		<groupId>org.jboss.resteasy</groupId>
+    		<artifactId>resteasy-jaxb-provider</artifactId>
+    		<version>3.1.4.Final</version>
+		</dependency>  
+		<dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jackson2-provider</artifactId>
-            <version>${restEasy.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.jersey.core</groupId>
-            <artifactId>jersey-client</artifactId>
-            <version>${jersey.version}</version>
+            <version>3.1.4.Final</version>
         </dependency>
     </dependencies>
     <build>

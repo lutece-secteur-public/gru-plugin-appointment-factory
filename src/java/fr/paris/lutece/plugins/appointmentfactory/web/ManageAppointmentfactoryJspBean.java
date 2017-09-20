@@ -49,15 +49,12 @@ import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-
 import fr.paris.lutece.plugins.appointment.service.FormService;
 import fr.paris.lutece.plugins.appointment.service.FormTraderService;
 import fr.paris.lutece.plugins.appointment.web.rs.Constants;
 import fr.paris.lutece.plugins.appointmentfactory.business.AppointmentFactoryDTO;
 import fr.paris.lutece.plugins.appointmentfactory.business.InstanceDTO;
 import fr.paris.lutece.plugins.appointmentfactory.service.InstanceService;
-import fr.paris.lutece.plugins.rest.service.RestConstants;
 import fr.paris.lutece.portal.service.admin.AccessDeniedException;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
 import fr.paris.lutece.portal.util.mvc.admin.MVCAdminJspBean;
@@ -235,8 +232,8 @@ public class ManageAppointmentfactoryJspBean extends MVCAdminJspBean
         String url;
         Response res;
 
-        Client client = ClientBuilder.newClient( ).register( JacksonJsonProvider.class );
-        StringBuilder stbPath = new StringBuilder( ).append( RestConstants.BASE_PATH ).append( Constants.PLUGIN_PATH ).append( Constants.FORM_PATH )
+        Client client = ClientBuilder.newClient( );//.register( JacksonJsonProvider.class );
+        StringBuilder stbPath = new StringBuilder( ).append( Constants.BASE_REST_PATH ).append( Constants.PLUGIN_PATH ).append( Constants.FORM_PATH )
                 .append( Constants.IMPORT_PATH );
         String strPath = stbPath.toString( );
         for ( String strIdInstance : tabIdInstances )
