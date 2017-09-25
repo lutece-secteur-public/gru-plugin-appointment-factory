@@ -232,7 +232,7 @@ public class ManageAppointmentfactoryJspBean extends MVCAdminJspBean
         String url;
         Response res;
 
-        Client client = ClientBuilder.newClient( );//.register( JacksonJsonProvider.class );
+        Client client = ClientBuilder.newClient( );
         StringBuilder stbPath = new StringBuilder( ).append( Constants.BASE_REST_PATH ).append( Constants.PLUGIN_PATH ).append( Constants.FORM_PATH )
                 .append( Constants.IMPORT_PATH );
         String strPath = stbPath.toString( );
