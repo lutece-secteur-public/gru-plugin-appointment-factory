@@ -43,16 +43,12 @@
             <version>${appointment.version}</version>
             <type>lutece-plugin</type>
         </dependency>
-        <dependency>
-    		<groupId>org.jboss.resteasy</groupId>
-    		<artifactId>resteasy-jaxrs</artifactId>
-    		<version>${resteasy.version}</version>
-		</dependency> 
+          
 		<dependency>
     		<groupId>org.jboss.resteasy</groupId>
     		<artifactId>resteasy-client</artifactId>
     		<version>${resteasy.version}</version>
-		</dependency>    
+		</dependency>  
 		<dependency>
     		<groupId>org.jboss.resteasy</groupId>
     		<artifactId>resteasy-jaxb-provider</artifactId>
@@ -62,7 +58,14 @@
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jackson2-provider</artifactId>
             <version>${resteasy.version}</version>
-        </dependency>
+        </dependency> 
+        <!--<dependency>
+    		<groupId>org.jboss.resteasy</groupId>
+    		<artifactId>resteasy-jaxrs</artifactId>
+    		<version>${resteasy.version}</version>
+		</dependency> 
+		   
+		-->
     </dependencies>
     <build>
         <plugins>
