@@ -41,7 +41,7 @@ public final class InstanceService
                     i,
                     new InstanceDTO( i, AppPropertiesService.getProperty( PROPERTY_INSTANCE_NAME + i ), AppPropertiesService.getProperty( PROPERTY_INSTANCE_URL
                             + i ) ) );
-        }        
+        }
         return mapInstances;
     }
 
