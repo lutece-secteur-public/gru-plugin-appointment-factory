@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<plug-in>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><plug-in>
     <name>appointmentfactory</name>
     <class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
     <version>1.0.0</version>
-    <documentation></documentation>
-    <installation></installation>
-    <changes></changes>
-    <user-guide></user-guide>
+    <documentation/>
+    <installation/>
+    <changes/>
+    <user-guide/>
     <description>appointmentfactory.plugin.description</description>
     <provider>appointmentfactory.plugin.provider</provider>
     <provider-url>https://www.paris.fr/</provider-url>
@@ -27,7 +26,7 @@
             <feature-description>appointmentfactory.adminFeature.ManageAppointmentfactory.description</feature-description>
             <feature-level>2</feature-level>            
             <feature-url>jsp/admin/plugins/appointmentfactory/ManageAppointmentfactory.jsp</feature-url>
-            <feature-icon-url></feature-icon-url>
+            <feature-icon-url/>
       </admin-feature>
     </admin-features>    
 
